@@ -1,0 +1,91 @@
+{% macro generate(pages, class) %}
+    {% if pages|length > 1 %}
+        <ol class="{{ class }}" aria-label="{{ 'app.default.breadcrumb'|trans }}">
+            {% for page in pages %}
+                <li class="breadcrumb-item {{ loop.last ? 'active' : '' }}"  {{ loop.last ? 'aria-current="page"' : '' }}>
+                    {%- if loop.last -%}
+                        {{- page.name|trans -}}
+                    {%- else -%}
+                        <a href="{{ 'url' in page|keys and page.url is not empty ? page.url : '#' }}">
+                            {{- page.name|trans -}}
+                        </a>
+                    {%- endif -%}
+                </li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+{% endmacro %}
+
+{% macro crud_links(data, id, ignore, attr = null, useText = false, isList = false, showCustom = true) %}
+    {% import '@TopnodeBase/macros/icon.html.twig' as icon_helper %}
+
+    {% if data is defined and 'crud' in data|keys %}
+        {% for key, route in data.crud if key not in ignore %}
+            {% if key == 'index' %}
+                {% set tooltip = 'app.breadcrumb.list' %}
+            {% elseif  key == 'new' %}
+                {% set tooltip = 'app.breadcrumb.new' %}
+            {% elseif  key == 'upload' %}
+                {% set tooltip = 'app.breadcrumb.import' %}
+            {% elseif key == 'edit' and id > 0 %}
+                {% set tooltip = 'app.breadcrumb.edit' %}
+            {% elseif key == 'delete' and id > 0 %}
+                {% set tooltip = 'app.breadcrumb.delete' %}
+            {% elseif key == 'show' and id > 0 %}
+                {% set tooltip = 'app.breadcrumb.info' %}
+            {% elseif key == 'setting' and id > 0 %}
+                {% set tooltip = 'app.breadcrumb.config' %}
+            {% elseif key == 'duplicate' and id > 0 %}
+                {% set tooltip = 'app.breadcrumb.duplicate' %}
+            {% elseif key == 'export' %}
+                {% set tooltip = 'app.breadcrumb.export' %}
+            {% endif %}
+
+            {% if id > 0 and key in ['edit', 'delete', 'show', 'setting', 'duplicate'] %}
+                {% set path = path(route, { id: id }) %}
+            {% elseif key == 'export' %}
+                {% set path = path(route, app.request.query.all) %}
+            {% else %}
+                {% set path = path(route) %}
+            {% endif %}
+
+            {% if isList %}
+                <li>
+            {% endif %}
+
+            {% if useText %}
+                {{ icon_helper.link_icon_with_text(path, key, (key in attr|keys ? attr[key] : []), tooltip) }}
+            {% else %}
+                {{ icon_helper.link_icon(path, key, (key in attr|keys ? attr[key] : []), tooltip) }}
+            {% endif %}
+
+            {% if isList %}
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if 'custom' in data|keys and showCustom %}
+            {% for route, custom_data in data.custom %}
+                {% if 'has_id' in custom_data|keys and custom_data.has_id %}
+                    {% set path = path(route, { id: id }) %}
+                {% else %}
+                    {% set path = path(route) %}
+                {% endif %}
+
+                {% if isList %}
+                    <li>
+                {% endif %}
+
+                {% if useText %}
+                    {{ icon_helper.link_icon_with_text(path, custom_data.icon, (custom_data.attr is defined ? custom_data.attr : []), custom_data.label) }}
+                {% else %}
+                    {{ icon_helper.link_icon(path, custom_data.icon, (custom_data.attr is defined ? custom_data.attr : []), custom_data.label) }}
+                {% endif %}
+
+                {% if isList %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+{% endmacro %}

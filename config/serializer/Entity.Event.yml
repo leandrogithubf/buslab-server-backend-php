@@ -1,0 +1,45 @@
+App\Entity\Event:
+    exclusion_policy: ALL
+    properties:
+        protocol:
+            expose: true
+        identifier:
+            expose: true
+        comment:
+            expose: true
+        start:
+            expose: true
+        end:
+            expose: true
+        vehicle:
+            expose: true
+        modality:
+            expose: true
+        category:
+            expose: true
+        status:
+            expose: true
+        state:
+            expose: true
+        employee:
+            expose: true
+        line:
+            expose: true
+        partial:
+            expose: true
+        tableRef:
+            expose: true
+        garage:
+            expose: true
+        sector:
+            expose: true
+        action:
+            expose: true
+        local:
+            expose: true
+        driver:
+            expose: true
+        collector:
+            expose: true
+        trip:
+            expose: true

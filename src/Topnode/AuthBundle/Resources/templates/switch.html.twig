@@ -1,0 +1,46 @@
+{% extends '@TopnodeAuth/login.html.twig' %}
+
+{% block content %}
+    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+        <div class="row">
+            <div class="col-12">
+                <a class="btn btn-danger btn-block mt-2" href="{{ path('security_switch', {'_become_him': '_exit'}) }}">
+                    {{- 'app.security.switch.btn.back'|trans -}}
+                </a>
+            </div>
+        </div>
+    {% else %}
+        {% for role in roles %}
+            <div class="row">
+                <div class="col-12">
+                    <h4>{{ role.description }}</h4>
+                    <form action="" method="GET">
+                        <div class="form-group col-12">
+                            <select name="_become_him" class="form-control form-control-lg">
+                                {% for usuario in usuarios[role.id] %}
+                                    <option value="{{ usuario.email }}">
+                                        {{- usuario.name }} - {{ usuario.id -}}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-12">
+                            <button type="submit" class="btn btn-block btn-primary">
+                                {{- 'app.security.switch.btn.send'|trans -}}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-12">
+            <a class="btn btn-danger btn-block mt-2" href="{{ path('security_logout') }}">
+                {{- 'app.security.default.logout'|trans -}}
+            </a>
+        </div>
+    </div>
+{% endblock %}

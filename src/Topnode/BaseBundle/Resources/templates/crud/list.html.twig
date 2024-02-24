@@ -1,0 +1,85 @@
+{% extends '@TopnodeBase/system.html.twig' %}
+
+{% import '@TopnodeBase/macros/sortable.html.twig' as sortable_helper %}
+{% import tableEntityTemplate is defined ? tableEntityTemplate : '@TopnodeBase/macros/table.entity.html.twig' as table_helper %}
+
+{% block content %}
+    {% block list_content %}
+            <div class="row">
+                <div class="col-sm-12">
+                    {% block filter_form_content %}
+                        {{ form_start(form_filter, {
+                            'attr': {
+                                'class': 'form-inline',
+                                'role': 'search',
+                            }
+                        }) }}
+
+                        {{ form_widget(form_filter.search, {
+                            'attr': {
+                                'autocomplete': 'off'
+                            }
+                        }) }}
+
+                        {% for key, item in form_filter if key != 'search' %}
+                            {{ form_widget(item) }}
+                        {% endfor %}
+
+                        <button class="btn mx-lg-1 my-3 btn-rounded btn-outline-primary" data-toggle="tooltip" data-placement="top" title="{{ 'app.form.filter'|trans }}">
+                            <i class="fa fa-search"></i>
+                        </button>
+
+                        {% if form_filter.vars.submitted %}
+                            <a href="{{ path(app.request.attributes.get('_route')) }}" data-toggle="tooltip" data-placement="top" title="{{ 'app.form.clear_filter'|trans }}" class="btn btn-filter btn-rounded" style="background-color: buttonface; color: black;">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        {% endif %}
+
+                        {{ form_end(form_filter) }}
+                    {% endblock %}
+                </div>
+            </div>
+
+            <div class="row m-b-20">
+                <div class="col-12">
+                    {% block list_top %}
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="float-left">
+                                    {% if list|length > 0 %}
+                                        <p class="text-left">
+                                            {{ sortable_helper.list_information(list) }}
+                                        </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <nav class="float-right" aria-label="navigation">
+                                    {% if list is paginated %}
+                                        {{ knp_pagination_render(list) }}
+                                    {% endif %}
+                                </nav>
+                            </div>
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+
+            <div id="abstract-crud-list" class="table-responsive">
+                {% include '@TopnodeBase/partials/system_crud_table.html.twig' %}
+            </div>
+
+            <div class="row m-t-20">
+                <div class="col-12">
+                    {% block list_footer %}
+                        {{ block('list_top') }}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block list_fab %}
+        {% include '@TopnodeBase/partials/system_crud_fab.html.twig' %}
+    {% endblock %}
+{% endblock %}

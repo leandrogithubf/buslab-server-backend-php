@@ -1,0 +1,21 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+    App\Topnode\AuthBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Tests,Twig}'
+    tn.auth.twig.extension:
+        class: App\Topnode\AuthBundle\Twig\BaseExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+    tn.security.recaptcha:
+        class: App\Topnode\AuthBundle\Security\CaptchaService
+        arguments: ["%kernel.environment%"]
+        public: true
+    tn.security.utils.generator.auth_redirection_decisor:
+        class: App\Topnode\AuthBundle\Utils\Generator\AuthRedirectionDecisorGenerator
+        autoconfigure: true
+        public: true

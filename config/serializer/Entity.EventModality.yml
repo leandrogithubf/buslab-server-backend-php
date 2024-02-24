@@ -1,0 +1,9 @@
+App\Entity\EventModality:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        description:
+            expose: true
+
+

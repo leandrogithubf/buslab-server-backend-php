@@ -1,0 +1,16 @@
+# Any changes to this file should be done to ./config/topnode/breadcrumb.yml or the translations strings
+
+security_login:
+    name: "app.security.login.title"
+
+security_recover:
+    name: "app.security.recover.title"
+
+security_recover_execute:
+    name: "app.security.recover_execute.title"
+
+security_recover_change:
+    name: "app.security.recover_change.title"
+
+security_switch:
+    name: "app.security.switch.title"

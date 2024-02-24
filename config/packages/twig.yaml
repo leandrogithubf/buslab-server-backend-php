@@ -1,0 +1,17 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    date:
+      format: 'd/m/Y H:i'
+      interval_format: '%d dias'
+    number_format:
+      decimal_point: ','
+      thousands_separator: '.'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    form_themes:
+        - '@TopnodeBase/form/fields.html.twig'
+    paths:
+        '%kernel.project_dir%/templates/bundles/TopnodeBaseBundle/': "TopnodeBase"
+        '%kernel.project_dir%/src/Topnode/BaseBundle/Resources/templates/': "TopnodeBase"
+        '%kernel.project_dir%/templates/bundles/TopnodeAuthBundle/': "TopnodeAuth"
+        '%kernel.project_dir%/src/Topnode/AuthBundle/Resources/templates/': "TopnodeAuth"

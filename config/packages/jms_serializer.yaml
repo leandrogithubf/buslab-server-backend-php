@@ -1,0 +1,21 @@
+jms_serializer:
+    visitors:
+        xml_serialization:
+            format_output: '%kernel.debug%'
+    handlers:
+        datetime:
+            default_format: "Y-m-d H:i:s"
+    property_naming:
+        id: jms_serializer.identical_property_naming_strategy
+    metadata:
+        auto_detection: true
+        directories:
+            app:
+                namespace_prefix: "App"
+                path: "%kernel.root_dir%/../config/serializer"
+            auth:
+                namespace_prefix: "App\\Topnode\\AuthBundle"
+                path: "%kernel.root_dir%/../config/serializer/auth"
+            base:
+                namespace_prefix: "App\\Topnode\\BaseBundle"
+                path: "%kernel.root_dir%/../config/serializer/base"

@@ -1,0 +1,90 @@
+parameters:
+    locale: "%env(LOCALE_LANG)%"
+    default_host: "%env(DEFAULT_HOST)%"
+    default_host_schema: "%env(DEFAULT_HOST_SCHEMA)%"
+
+knp_paginator:
+    page_range: 5
+    template:
+        pagination: '@TopnodeBase/pagination/sliding.html.twig'
+        sortable: '@TopnodeBase/pagination/sortable_link.html.twig'
+
+knp_menu:
+    twig:
+        template: '@TopnodeBase/menu/menu.html.twig'
+    templating: false
+    default_renderer: twig
+
+jms_serializer:
+    metadata:
+        auto_detection: true
+    handlers:
+        datetime:
+            default_format: "Y-m-d H:i:s"
+
+topnode_auth:
+    recaptcha:
+        sitekey: "%env(RECAPTCHA_SITEKEY)%"
+        secretkey: "%env(RECAPTCHA_SECRETKEY)%"
+
+topnode_file:
+    file_handler: "local_storage"
+
+topnode_base:
+    environment_defaults:
+        since: 2018
+        name: "%env(COMPANY_NAME)%"
+        slogan: "%env(COMPANY_SLOGAN)%"
+        description: "%env(COMPANY_DESCRIPTION)%"
+        logo:
+            default: "%env(COMPANY_MENU_LOGO)%"
+            login: "%env(COMPANY_LOGIN_LOGO)%"
+            menu: "%env(COMPANY_MENU_LOGO)%"
+            xs: "%env(COMPANY_SMALL_LOGO)%"
+        front:
+            manage_front_files: "%env(bool:COMPANY_FRONT_ENABLED)%"
+            browserconfig:
+                tilecolor: "%env(COMPANY_FRONT_TILECOLOR)%"
+            manifest:
+                offline_enabled: "%env(COMPANY_FRONT_OFFLINE_ENABLED)%"
+                theme_color: "%env(COMPANY_FRONT_THEME_COLOR)%"
+                background_color: "%env(COMPANY_FRONT_BACKGROUND_COLOR)%"
+    environment:
+        localhost:
+            name: "DEV %env(COMPANY_NAME)%"
+    icons: ~
+    mailer:
+        default_from_email: "%env(MAILER_DEFAULT_FROM_EMAIL)%"
+        default_from_name: "%env(MAILER_DEFAULT_FROM_NAME)%"
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+    App\Topnode\BaseBundle\:
+        autoconfigure: false
+        resource: '../src/Topnode/BaseBundle/'
+        exclude: '{DependencyInjection,Doctrine,Resources,Security,Twig,Utils}'
+    App\Topnode\AuthBundle\:
+        autoconfigure: false
+        resource: '../src/Topnode/AuthBundle/'
+        exclude: '{DependencyInjection,Doctrine,Resources,Security,Twig,Utils}'
+    App\Topnode\FileBundle\:
+        autoconfigure: false
+        resource: '../src/Topnode/FileBundle/'
+        exclude: '{DependencyInjection,Doctrine,Resources,Security,Twig,Utils}'
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+    App\Repository\UserRepository: ~
+    App\Repository\VehicleRepository: ~
+    App\Repository\CompanyRepository: ~
+    App\Buslab\Utils\LogCreator: ~

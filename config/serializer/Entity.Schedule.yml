@@ -1,0 +1,41 @@
+App\Entity\Schedule:
+    exclusionPolicy: ALL
+    properties:
+        identifier:
+            expose: true
+        tableCode:
+            expose: true
+        sequence:
+            expose: true
+        hourTermGoing:
+            expose: true
+        hourTermArrival:
+            expose: true
+        horOutCollected:
+            expose: true
+        sequencProg:
+            expose: true
+        dataValidity:
+            expose: true
+        vehicle:
+            expose: true
+        line:
+            expose: true
+        service:
+            expose: true
+        description:
+            expose: true
+        employee:
+            expose: true
+        employeeCollector:
+            expose: true
+        dates:
+            expose: true
+        trip:
+            expose: true
+        company:
+            expose: true
+        startsAt:
+            expose: true
+        endsAt:
+            expose: true    

@@ -1,0 +1,27 @@
+App\Entity\Line:
+    exclusion_policy: ALL
+    virtual_properties:
+        label:
+            exp: object.getLabel()
+            serialized_name: label
+            type: string
+    properties:
+        identifier:
+            expose: true
+        code:
+            expose: true
+        passage:
+            expose: true
+        company:
+            expose: true
+        direction:
+            expose: true
+        point:
+            expose: true
+        description:
+            expose: true
+        points:
+            expose: true
+        maxSpeed:
+            expose: true
+

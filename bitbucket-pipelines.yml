@@ -1,0 +1,37 @@
+# This is a sample build configuration for PHP.
+# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: php:7.2
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - composer
+        script:
+          - ./php-cs-fixer fix src/ --rules=@Symfony,@PSR1,@PSR2,-concat_space,-yoda_style
+          - ./php-cs-fixer fix src/ --rules=linebreak_after_opening_tag,no_unused_imports,no_useless_else
+          - ./php-cs-fixer fix src/ --rules=ordered_imports
+    - step:
+        name: Deploy to test
+        deployment: Test
+        script:
+              - apt-get update && apt-get install -y zlib1g-dev
+              - docker-php-ext-install zip
+              - docker-php-ext-enable zip
+              - apt-get update && apt-get install -y unzip
+              - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+              - composer install
+              # - ./bin/phpunit -v
+    - step:
+        name: Deploy to staging
+        deployment: Staging
+        caches:
+          - composer
+        script:
+            - ./php-cs-fixer fix src/ --rules=@Symfony,@PSR1,@PSR2,-concat_space,-yoda_style
+            - ./php-cs-fixer fix src/ --rules=linebreak_after_opening_tag,no_unused_imports,no_useless_else
+            - ./php-cs-fixer fix src/ --rules=ordered_imports
+            # TODO: Adicionar testes unitários na pipeline

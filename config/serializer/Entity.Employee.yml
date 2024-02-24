@@ -1,0 +1,19 @@
+App\Entity\Employee:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        name:
+            expose: true
+        code:
+            expose: true
+        company:
+            expose: true
+        modality:
+            expose: true
+        cnh:
+            expose: true
+        cnhExpiration:
+            expose: true
+        cellphone:
+            expose: true

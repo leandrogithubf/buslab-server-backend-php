@@ -1,0 +1,18 @@
+App\Entity\ScheduleDate:
+    exclusionPolicy: ALL
+    properties:
+        identifier:
+            expose: true
+        schedule:
+            expose: true
+        trip:
+            expose: true
+        date:
+            expose: true
+        vehicle:
+            expose: true
+        driver:
+            expose: true
+        collector:
+            expose: true
+

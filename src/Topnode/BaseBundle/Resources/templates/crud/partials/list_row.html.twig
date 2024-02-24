@@ -1,0 +1,15 @@
+{% import tableEntityTemplate ? tableEntityTemplate : '@TopnodeBase/macros/table.entity.html.twig' as table_helper %}
+
+{% spaceless %}
+    {{ table_helper.row(entity, {
+        'edit': {
+            'class': 'edit-form'
+        },
+        'delete': {
+            'class': 'prompt-removal'
+        },
+        'duplicate': {
+            'class': 'duplicate-form'
+        }
+    }, redirect is defined ? redirect : null) }}
+{% endspaceless %}

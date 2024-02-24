@@ -1,0 +1,29 @@
+App\Entity\Trip:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        driver:
+            expose: true
+        collector:
+            expose: true
+        line:
+            expose: true
+        vehicle:
+            expose: true
+        obd:
+            expose: true
+        company:
+            expose: true
+        starts_at:
+            expose: true
+        ends_at:
+            expose: true
+        status:
+            expose: true
+        modality:
+            expose: true
+        schedule:
+            expose: true
+        report:
+            expose: true

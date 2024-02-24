@@ -1,0 +1,56 @@
+{% import '@TopnodeBase/macros/breadcrumb.html.twig' as breadcrumb_helper %}
+
+{% if 'crud' in page_breadcrumbs|last|keys and (page_breadcrumbs|last).crud is not empty %}
+    {% set fab_links_attr = {
+        'export': {
+            'target': '_blank',
+            'class': 'mfb-component__button--child',
+            'icon-class': 'mfb-component__child-icon',
+            'data-placement': 'left',
+        },
+        'upload': {
+            'class': 'mfb-component__button--child',
+            'icon-class': 'mfb-component__child-icon',
+            'data-placement': 'left',
+        },
+        'new': {
+            'class': 'fab-form mfb-component__button--child',
+            'icon-class': 'mfb-component__child-icon',
+            'data-placement': 'left',
+            'data-url': (not (page_breadcrumbs|last)['form'] is empty ? url((page_breadcrumbs|last)['form']) : null)
+        },
+        'show': {
+            'class': 'fab-form mfb-component__button--child',
+            'icon-class': 'mfb-component__child-icon',
+            'data-placement': 'left',
+            'data-url': (not (page_breadcrumbs|last)['form'] is empty ? url((page_breadcrumbs|last)['form']) : null)
+        }
+    } %}
+
+    {%
+        set crud_links = breadcrumb_helper.crud_links(
+            page_breadcrumbs|last,
+            null,
+            ['index', 'edit', 'show', 'delete', 'duplicate'],
+            fab_links_attr,
+            false,
+            true,
+            false
+        )
+    %}
+
+    {% if crud_links|replace({"\n":'', "\r":'', " ":''})|length > 0 %}
+        <ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="click"
+            >
+            <li class="mfb-component__wrap">
+                <a href="#" class="mfb-component__button--main">
+                  <i class="mfb-component__main-icon--resting {{ icon_family }} {{ icons.options }}"></i>
+                  <i class="mfb-component__main-icon--active {{ icon_family }} {{ icons.close }}"></i>
+                </a>
+                <ul class="mfb-component__list">
+                    {{ crud_links }}
+                </ul>
+            </li>
+        </ul>
+    {% endif %}
+{% endif %}

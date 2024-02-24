@@ -1,0 +1,85 @@
+{% import "@TopnodeBase/macros/modal.html.twig" as modal_helper %}
+
+{% spaceless %}
+    {% block form %}
+
+        {{ modal_helper.open(title, '', false) }}
+
+        {% block form_start %}
+            {{ form_start(form, {attr: {'data-result_container': '.list-container'}}) }}
+        {% endblock %}
+
+        <div class="modal-body">
+            {% block form_fields %}
+                {% set count = 0 %}
+                {% for field in form if field.vars.name != "_token" %}
+                    {% if 'single_row' in field.vars.attr|keys and field.vars.attr.single_row %}
+                        {% if (count % 2) == 1 %}
+                            </div> {# Fecha a div aberta da linha do campo anterior #}
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-12">
+                                {{ form_row(field) }}
+                            </div>
+                        </div>
+                        {% set count = count + 2 %}
+                    {% elseif field.children|length > 0 %}
+                        {% if (count % 2) == 1 %}
+                            </div> {# Fecha a div aberta da linha do campo anterior #}
+                        {% endif %}
+
+                        <div class="row">
+                            {% if field.vars.label|length > 0 %}
+                                <label>{{ field.vars.label|trans }}</label>
+                            {% endif %}
+                            
+                            {% for child in field.children %}
+                                <div class="col-md-{{ 12 / field.children|length }}">
+                                    {{ form_row(child) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {% set count = count + 2 %}
+                    {% else %}
+                        {% if (count % 2) == 0 %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{ form_row(field) }}
+                                </div>
+                            {% if loop.index == form|length - 1 %}
+                                </div>
+                            {% endif %}
+                        {% elseif (count % 2) == 1 %}
+                                <div class="col-md-6">
+                                    {{ form_row(field) }}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% set count = count + 1 %}
+                    {% endif %}
+                {% endfor %}
+
+                {{ form_row(form._token) }}
+            {% endblock %}
+        </div>
+
+        {{ modal_helper.close([
+            {
+                'class': 'btn-secondary',
+                'dismiss': true,
+                'icon': 'backward',
+                'label': 'app.form.cancel'
+            },
+            {
+                'type': 'submit',
+                'class': 'btn-primary submit',
+                'icon': 'forward',
+                'label': 'app.form.save'
+            }
+        ], false) }}
+
+        {% block form_end %}
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endblock %}
+{% endspaceless %}

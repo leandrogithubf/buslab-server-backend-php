@@ -1,0 +1,24 @@
+{% import tableEntityTemplate is defined ? tableEntityTemplate : '@TopnodeBase/macros/table.entity.html.twig' as table_helper %}
+
+{% set crudAttrs = {
+        'edit': {'class': 'edit-form'},
+        'delete': {
+            'class': 'prompt-removal',
+        },
+        'duplicate': {'class': 'duplicate-form'}
+    }
+%}
+
+{% if isShowInModal %}
+    {% set crudAttrs = { 'show': {'class': 'show-modal'} }|merge(crudAttrs) %}
+{% else %}
+    {% set crudAttrs = { 'show': {'class': 'show-modal-redirect'} }|merge(crudAttrs) %}
+{% endif %}
+
+{{ table_helper.table(
+    list,
+    "table table-entity-list table-td-valign-middle table-hover",
+    crudAttrs,
+    (redirect is defined ? redirect : null),
+    ['export']
+)}}

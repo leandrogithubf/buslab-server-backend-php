@@ -1,0 +1,42 @@
+doctrine:
+    dbal:
+        driver: 'pdo_mysql'
+        server_version: '5.7'
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+
+        url: '%env(resolve:DATABASE_URL)%'
+        mapping_types:
+            enum: string
+        logging: true
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App
+        filters:
+            tn.doctrine.listener.deactivate:
+                class: 'App\Topnode\BaseBundle\Doctrine\Filter\DeletedFilter'
+                enabled: true
+        dql:
+            numeric_functions:
+                day:            DoctrineExtensions\Query\Mysql\Day
+                month:          DoctrineExtensions\Query\Mysql\Month
+                year:           DoctrineExtensions\Query\Mysql\Year
+                degrees:        DoctrineExtensions\Query\Mysql\Degrees
+                acos:           DoctrineExtensions\Query\Mysql\Acos
+                cos:            DoctrineExtensions\Query\Mysql\Cos
+                radians:        DoctrineExtensions\Query\Mysql\Radians
+                sin:            DoctrineExtensions\Query\Mysql\Sin
+        resolve_target_entities:
+            App\Topnode\AuthBundle\Entity\MappedSuperclass\User: App\Entity\User
+            App\Topnode\AuthBundle\Entity\MappedSuperclass\Role: App\Entity\Role
+            App\Topnode\AuthBundle\Entity\MappedSuperclass\LoginAttempts: App\Entity\LoginAttempts

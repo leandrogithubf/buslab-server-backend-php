@@ -1,0 +1,49 @@
+{% import '@TopnodeBase/macros/icon.html.twig' as icon_helper %}
+
+{% if pageCount > 1 %}
+    <ul class="pagination">
+        {% if first is defined and current != first %}
+            <li class="paginate_button page-item first">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): first})) }}" aria-label="Primeiro">
+                    {{ icon_helper.icon('left') }}
+                    {{ icon_helper.icon('left') }}
+                </a>
+            </li>
+        {% endif %}
+
+        {% if previous is defined %}
+            <li class="paginate_button page-item previous">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): previous})) }}" aria-label="Anterior">
+                    {{ icon_helper.icon('left') }}
+                </a>
+            </li>
+        {% endif %}
+
+        {% for page in pagesInRange %}
+            {% if page != current %}
+                <li class="paginate_button page-item page">
+                    <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                </li>
+            {% else %}
+                <li class="paginate_button page-item active disabled"><a class="page-link">{{ page }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if next is defined %}
+            <li class="paginate_button page-item next">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): next})) }}" aria-label="Próximo">
+                    {{ icon_helper.icon('right') }}
+                </a>
+            </li>
+        {% endif %}
+
+        {% if last is defined and current != last %}
+            <li class="paginate_button page-item last">
+                <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): last})) }}" aria-label="Último">
+                    {{ icon_helper.icon('right') }}
+                    {{ icon_helper.icon('right') }}
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+{% endif %}

@@ -1,0 +1,50 @@
+.mfb-component__child-icon,
+.mfb-component__icon,
+.mfb-component__main-icon--active,
+.mfb-component__main-icon--resting {
+    font-size: 18px !important;
+    line-height: 56px !important;
+}
+
+label.error {
+    font-size: .8rem;
+    color: #ff0000;
+}
+
+input.error, textarea.error, .select2-selection.error {
+    border: 1px solid #ff0000;
+}
+
+input.error:focus, textarea.error:focus, .select2-selection.error:focus {
+    border: 1px solid #ff0000;
+    box-shadow: 0 1px 1px #f79b9b inset, 0 0 8px #f79b9b;
+    outline: 0 none;
+}
+
+.modal-login {
+    background: #000000a3;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+}
+
+.modal-login-iframe {
+    border-radius: 20px;
+    width: 100%;
+    height: 625px;
+}
+
+.modal-login-content {
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: relative;
+}
+
+.recaptcha-error-required {
+    color: red;
+}

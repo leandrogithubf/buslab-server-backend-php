@@ -1,0 +1,11 @@
+App\Entity\State:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        code:
+            expose: true
+        initials:
+            expose: true
+        name:
+            expose: true

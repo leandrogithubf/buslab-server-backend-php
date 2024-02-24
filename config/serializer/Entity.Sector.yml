@@ -1,0 +1,7 @@
+App\Entity\Sector:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        description:
+            expose: true

@@ -1,0 +1,7 @@
+App\Entity\VehicleStatus:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+        status:
+            expose: true

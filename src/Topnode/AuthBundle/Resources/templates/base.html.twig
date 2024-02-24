@@ -1,0 +1,58 @@
+{% extends '@TopnodeBase/base.html.twig' %}
+
+{% use '@TopnodeBase/partials/messages.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="offset-md-3 col-md-6 offset-lg-4 col-lg-4 p-xs-5 p-md-1 mt-5">
+            {% block container_inner %}
+                <img alt="{{ system.name ~ (system.slogan ? ' - ' ~ system.slogan : '') }}" class="img-fluid" src="{{ asset(system.logo.login) }}">
+
+                <h4 class="text-center mt-4 mb-4">{{ page_title|trans }}</h4>
+
+                {{ block('messages') }}
+
+                {% block content %}
+                    {% block form %}
+                        {% if form is defined %}
+                            {{ form_start(form) }}
+                                {% block form_fields %}
+                                    {% for field in form if field.vars.name != "remember_me" %}
+                                        {{ form_row(field) }}
+                                    {% endfor %}
+                                {% endblock %}
+
+                                {% if  show_captcha is defined and show_captcha %}
+                                    {% block form_captcha %}
+                                        <div class="g-recaptcha" data-size="normal" data-sitekey="{{ recaptcha_sitekey }}"></div>
+                                    {% endblock %}
+                                {% endif %}
+
+                                {% block form_remember_me %}
+                                    {% if 'remember_me' in form|keys %}
+                                        {{ form_row(form.remember_me) }}
+                                    {% endif %}
+                                {% endblock %}
+
+                                {% block form_btn_send %}
+                                    <button class="btn btn-success btn-block mb-4" type="submit">
+                                        {% block form_btn_send_text %}
+                                            {{ 'app.security.default.btn.send'|trans }}
+                                        {% endblock %}
+                                    </button>
+                                {% endblock %}
+                            {{ form_end(form) }}
+
+                            {% block form_btn_extra %}{% endblock %}
+                        {% endif %}
+                    {% endblock %}
+                {% endblock %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock %}

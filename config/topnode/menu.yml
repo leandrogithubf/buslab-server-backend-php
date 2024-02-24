@@ -1,0 +1,5 @@
+main:
+    attr:
+        menu_class: navbar-nav
+        item_class: nav-item
+        link_class: nav-link

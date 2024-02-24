@@ -1,0 +1,67 @@
+{% import "@TopnodeBase/macros/modal.html.twig" as modal %}
+{% import "@TopnodeBase/macros/icon.html.twig" as icons_helper %}
+
+{% set messages = '' %}
+{% set isRenderingForm = false %}
+
+{% for key,deletion in deletions %}
+    {% if deletion == 'setNull' %}
+        {% set messages = messages ~
+        '<div class="row">
+            <div class="col-md-12 text-center">
+                <h3 class="message">' ~ (entityTranslationDomain ~ 'delete.setNull.' ~ key|trans) ~ '</h3>
+            </div>
+        </div>' %}
+    {% elseif deletion == 'cascade' %}
+        {% set messages = messages ~
+            '<div class="row">
+                <div class="col-md-12 text-center">
+                    <h3 class="message">' ~ ((entityTranslationDomain ~ 'delete.cascade.' ~ key)|trans) ~ '</h3>
+                </div>
+            </div>'
+        %}
+    {% elseif deletion == 'set' %}
+        {% set messages = messages ~
+            '<div class="row">
+                <div class="col-md-12 text-center">
+                    <h3 class="message">' ~ (entityTranslationDomain ~ 'delete.set.' ~ key|trans) ~ '</h3>
+                </div>
+            </div>'
+        %}
+        {% set isRenderingForm = true %}
+    {% endif %}
+{% endfor %}
+
+{% if isRenderingForm %}
+    {% set messages =  messages ~
+        '<div class="row">
+            <div class="col-md-12 text-center">'
+                ~ form(form) ~
+            '</div>
+        </div>'
+    %}
+{% endif %}
+
+{{ modal.content(
+    'app.modal.title.confirm.setNull',
+    '<div class="row">
+        <div class="col-sm-12 text-center">
+        '~icons_helper.icon('warning', {'icon-class' : 'fa-fw fa-5x'})~'
+        </div>
+    </div>'
+    ~ messages,
+    'modal-confirm-operations',
+    [
+        {
+            'class': 'btn-secondary',
+            'dismiss': true,
+            'label': 'app.default.cancel'
+        },
+        {
+            'class': 'btn-primary remove',
+            'label': 'app.default.confirm'
+        }
+    ],
+    true,
+    true
+) }}

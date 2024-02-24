@@ -1,0 +1,10 @@
+App\Topnode\AuthBundle\Entity\MappedSuperclass\User:
+    exclusion_policy: ALL
+    virtual_properties:
+        role:
+            exp: object.getRole().getRole()
+            serialized_name: role
+            type: string
+    properties:
+        identifier:
+            expose: true

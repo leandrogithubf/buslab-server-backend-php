@@ -1,0 +1,73 @@
+{% spaceless %}
+    <!DOCTYPE html>
+    <!--[if IE 8]> <html lang="{{ app.request.locale|replace({'_': '-'}) }}" class="ie8"> <![endif]-->
+    <!--[if !IE]><!-->
+    <html lang="{{ app.request.locale|replace({'_': '-'}) }}">
+    <!--<![endif]-->
+        <head>
+            <title>
+                {%- block title -%}
+                    {%- if page_title is defined and page_title|length > 0 -%}
+                        {{- page_title|trans }} - Agende consultas e exames
+                    {%- endif %}
+                {%- endblock -%}
+            </title>
+
+            {% block meta %}
+                <meta charset="utf-8">
+
+                <meta content="ie=edge" http-equiv="x-ua-compatible">
+                <meta content="{% block description %}{{ system.description }}{% endblock %}" name="description">
+                <meta content="width=device-width, initial-scale=1" name="viewport">
+            {% endblock %}
+
+            {% block opengraph %}
+                <meta property="og:type" content="website" />
+                <meta property="og:title" content="{{ block('title') }}" />
+                {% if app.request is not null %}
+                    <meta property="og:url" content="{{ app.request.attributes.get('_route') ? url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) : '' }}" />
+                {% endif %}
+            {% endblock %}
+
+            {% block stylesheets %}
+                <link href="{{ asset('build/app.css') }}" rel="stylesheet">
+                <link href="{{ asset('build/theme.css') }}" rel="stylesheet">
+            {% endblock %}
+
+            {% block favicons %}
+                <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('build/images/apple-touch-icon.png') }}">
+                <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('build/images/favicon-32x32.png') }}">
+                <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('build/images/android-chrome-192x192.png') }}">
+                <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('build/images/favicon-16x16.png') }}">
+                <link rel="shortcut icon" href="{{ asset('build/images/favicon.ico') }}">
+                <meta name="apple-mobile-web-app-title" content="{{ system.name }}">
+                <meta name="application-name" content="{{ system.name }}">
+                <meta name="msapplication-TileImage" content="{{ asset('build/images/mstile-144x144.png') }}">
+
+                <link rel="mask-icon" href="{{ asset('build/images/safari-pinned-tab.svg') }}" color="{{ system.front.manifest.theme_color }}">
+                <meta name="msapplication-TileColor" content="{{ system.front.browserconfig.tilecolor }}">
+                <meta name="theme-color" content="{{ system.front.manifest.theme_color }}">
+
+                <meta name="msapplication-config" content="{{ url('front_browserconfig') }}">
+                <link rel="manifest" href="{{ url('front_manifest') }}">
+            {% endblock %}
+        </head>
+        <body {% block body_attr %}{% endblock %} class="{% block body_class %}{% endblock %}" style="{% block body_style %}{% endblock %}">
+            {% block body %}{% endblock %}
+
+            {% if app.user %}
+                <div class="modal-login" style="display: none;">
+                    <div class="modal-login-content" data-user="{{ app.user.id }}" data-redirect={{ absolute_url(path('security_login')) }}>
+                        <iframe data-src="{{ absolute_url(path('security_login')) }}" frameborder="0" class="modal-login-iframe"></iframe>
+                    </div>
+                </div>
+            {% endif %}
+        </body>
+
+        {% block javascripts %}
+            <script src="{{ asset('build/app.js') }}"></script>
+            <script src="{{ asset('build/theme.js') }}"></script>
+            <script src="{{ asset('build/runtime.js') }}"></script>
+        {% endblock %}
+    </html>
+{% endspaceless %}

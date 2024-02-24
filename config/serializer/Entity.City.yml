@@ -1,0 +1,11 @@
+App\Entity\City:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        code:
+            expose: true
+        name:
+            expose: true
+        state:
+            expose: true

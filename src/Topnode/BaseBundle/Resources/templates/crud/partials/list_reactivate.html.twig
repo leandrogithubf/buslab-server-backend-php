@@ -1,0 +1,19 @@
+{% spaceless %}
+    <tr>
+        <td colspan="{{ (page_sortable|length) + 1 }}">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab">
+                    <h6 class="panel-title text-center">
+                        {% if "reactivate" in (page_breadcrumbs|last).crud_helpers|keys %}
+                            <a href="#" data-method="POST" data-url="{{ url((page_breadcrumbs|last).crud_helpers.reactivate, {id: entity.id}) }}" class="prompt-reactivation" role="button">
+                                {{- message_reactivate|trans -}}
+                            </a>
+                        {% else %}
+                            {{- message_deleted|trans -}}
+                        {% endif %}
+                    </h6>
+                </div>
+            </div>
+        </td>
+    </tr>
+{% endspaceless %}

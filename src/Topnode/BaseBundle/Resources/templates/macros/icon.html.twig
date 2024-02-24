@@ -1,0 +1,26 @@
+{% macro link_icon(url, key, attributes, tooltip) %}
+    {% import _self as helper %}
+
+    <a href="{{ url }}"
+        {% for attrname, attrvalue in attributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %}
+        {% if tooltip %}data-toggle="tooltip" {% if not 'data-placement' in attributes|keys %}data-placement="top"{% endif %}data-original-title="{{ tooltip|trans }}"{% endif %}
+        >
+        {{- helper.icon(key, attributes) -}}
+    </a>
+{% endmacro %}
+
+{% macro link_icon_with_text(url, key, attributes, text) %}
+    {% import _self as helper %}
+
+    <a href="{{ url }}"
+        {% for attrname, attrvalue in attributes %} {{ attrname }}="{{ attrvalue }}"{% endfor %}
+        >
+        {{- helper.icon(key, attributes) }} {{ text|trans -}}
+    </a>
+{% endmacro %}
+
+{% macro icon(key, attributes = null) %}
+    {%- if icon_family -%}
+        <i class="{{ icon_family }} {{ icons[key] }} {% if 'icon-class' in attributes|keys %}{{ attributes['icon-class'] }}{% endif %}"></i>
+    {%- endif -%}
+{% endmacro %}

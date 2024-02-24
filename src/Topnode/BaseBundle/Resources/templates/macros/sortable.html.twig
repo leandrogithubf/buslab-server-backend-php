@@ -1,0 +1,48 @@
+{% macro sortable(sortable_data, list) %}
+    {% import _self as helper %}
+
+    {%- if list is paginated -%}
+        {% for data in sortable_data %}
+            {{ helper.sortable_item(list, data.display_name, data.database_name) }}
+        {% endfor %}
+    {%- endif -%}
+{% endmacro %}
+
+{% macro sortable_item(list, display_name, database_name) %}
+    {% import '@TopnodeBase/macros/icon.html.twig' as icon_helper %}
+
+    {%- if list is paginated -%}
+        {%- if list.isSorted(database_name) -%}
+            {%- if list.direction|lower == 'desc' -%}
+                {% set icon = icon_helper.icon('desc') %}
+            {%- else -%}
+                {% set icon = icon_helper.icon('asc') %}
+            {%- endif -%}
+        {%- else -%}
+            {% set icon = icon_helper.icon('sort') %}
+        {%- endif -%}
+
+        {{- knp_pagination_sortable(list, display_name|trans ~ ' ' ~ icon, database_name) -}}
+    {%- endif -%}
+{% endmacro %}
+
+{% macro list_information(list) %}
+    {%- if list is paginated -%}
+        {% set showing = list|length %}
+
+        {{ 'app.pagination.sliding.showing'|trans }}
+        {% if showing == list.totalItemCount %}
+            {% transchoice showing %}
+                app.pagination.sliding.not_paginated
+            {% endtranschoice %}.
+        {% else %}
+            {% transchoice showing with {
+                '%first%': list.paginationData.firstItemNumber|number_format(0, ',', '.'),
+                '%last%': list.paginationData.lastItemNumber|number_format(0, ',', '.'),
+                '%total%': list.totalItemCount|number_format(0, ',', '.')
+            } %}
+                app.pagination.sliding.paginated
+            {% endtranschoice %}
+        {% endif %}
+    {%- endif -%}
+{% endmacro %}

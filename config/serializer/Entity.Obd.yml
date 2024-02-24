@@ -1,0 +1,16 @@
+App\Entity\Obd:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        serial:
+            expose: true
+        version:
+            expose: true
+        cellphoneNumber:
+            expose: true
+        company:
+            expose: true
+        status:
+            expose: true
+

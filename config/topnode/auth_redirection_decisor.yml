@@ -1,0 +1,11 @@
+# Setup the lines as follows:=> ROLE: route_to_redirect
+# Keep in mind that the roles are checked with inheritance.
+# Also, keep in mind that the first match is going to be used
+
+# This is default and should not be removed or edited, unless you know what you
+# are doing.
+ROLE_SUPER_ADMIN: security_switch
+
+# Edit (as long as you know what you are doing) as needed after this comment.
+# They should be the ones you need to make the system work propperly.
+# ROLE_USER: app_example

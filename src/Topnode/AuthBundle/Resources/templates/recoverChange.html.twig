@@ -1,0 +1,11 @@
+{% extends '@TopnodeAuth/base.html.twig' %}
+
+{% block form_btn_send_text %}
+    {{ 'app.security.recover_change.btn.send'|trans }}
+{% endblock %}
+
+{% block form_btn_extra %}
+    <a href="{{ path('security_login') }}" class="btn btn-primary btn-block mt-2">
+        {{ 'app.security.recover_change.btn.back'|trans }}
+    </a>
+{% endblock %}

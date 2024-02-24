@@ -1,0 +1,7 @@
+App\Entity\CellphoneNumber:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        number:
+            expose: true

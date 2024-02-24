@@ -1,0 +1,6 @@
+/vendor
+/var/
+/node_modules
+-Dockerfile_2
+-Dockerfile_3
+-Dockerfile_4

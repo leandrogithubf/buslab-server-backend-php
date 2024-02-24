@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- https://phpunit.de/manual/current/en/appendixes.configuration.html -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.5/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         bootstrap="vendor/autoload.php"
+>
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <env name="KERNEL_CLASS" value="App\Kernel" />
+        <env name="APP_ENV" value="test" />
+        <env name="APP_DEBUG" value="1" />
+        <env name="APP_SECRET" value="e009ebb9ecf8bcdfd9ecbeba6a1f9268" />
+        <env name="SHELL_VERBOSITY" value="-1" />
+        <env name="COMPANY_NAME" value="Cliente" />
+        <env name="COMPANY_SLOGAN" value="Slogan" />
+        <env name="COMPANY_DESCRIPTION" value="Slogan" />
+        <env name="COMPANY_DEFAULT_LOGO" value="build/images/logo.png" />
+        <env name="COMPANY_MENU_LOGO" value="build/images/logo-menu.png" />
+        <env name="COMPANY_SMALL_LOGO" value="build/images/logo-small.png" />
+        <env name="MAILER_DEFAULT_FROM_EMAIL" value="mbt@topnode.com.br" />
+        <env name="MAILER_DEFAULT_FROM_NAME" value="top(node)" />
+        <env name="DATABASE_URL" value="mysql://root:root@127.0.0.1:3306/cliente_sis" />
+        <!-- <env name="MAILER_URL" value="smtp://smtp.sendgrid.net:465?encryption=ssl&username=apikey&password=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" /> -->
+        <env name="DELIVERY_ADDRESS" value="mbt@topnode.com.br" />
+        <env name="RECAPTCHA_SITEKEY" value="6Lf80X0UAAAAAK9YOw2Uw63ESDgOK6QS" />
+        <env name="RECAPTCHA_SECRETKEY" value="6Lf80X0UAAAAAPagvtx57zTcBhMksjddfvDSj8Bg" />
+
+        <!-- define your env variables for the test env here -->
+
+        <!-- ###+ lexik/jwt-authentication-bundle ### -->
+        <env name="JWT_SECRET_KEY" value="%kernel.project_dir%/config/jwt/private.pem"/>
+        <env name="JWT_PUBLIC_KEY" value="%kernel.project_dir%/config/jwt/public.pem"/>
+        <env name="JWT_PASSPHRASE" value="d14350a53a71ac3240326ff88c2b24b0"/>
+        <!-- ###- lexik/jwt-authentication-bundle ### -->
+
+        <!-- ###+ nelmio/cors-bundle ### -->
+        <env name="CORS_ALLOW_ORIGIN" value="^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$"/>
+        <!-- ###- nelmio/cors-bundle ### -->
+    </php>
+
+    <testsuites>
+        <testsuite name="Project Test Suite">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>src</directory>
+        </whitelist>
+    </filter>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
+</phpunit>

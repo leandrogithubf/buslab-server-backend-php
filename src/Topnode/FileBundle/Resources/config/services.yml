@@ -1,0 +1,18 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+    App\Topnode\FileBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Tests,Twig}'
+
+    tn.file.handler.decisor:
+        class: App\Topnode\FileBundle\Utils\FileHandlerDecisor
+        autoconfigure: true
+        public: true
+
+    App\Topnode\FileBundle\Repository\FileRepository:
+        public: true
+        autoconfigure: true
+        tags: ['doctrine.repository_service']

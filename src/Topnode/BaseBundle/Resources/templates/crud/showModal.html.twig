@@ -1,0 +1,19 @@
+{% import "@TopnodeBase/macros/modal.html.twig" as modal %}
+{% import "@TopnodeBase/macros/icon.html.twig" as icons_helper %}
+
+{% set renderedContent = content|raw %}
+
+{{ modal.content(
+    (translationDomain ~ 'form.title.show'|trans),
+    renderedContent,
+    'modal-show',
+    [
+        {
+            'class': 'btn-secondary',
+            'dismiss': true,
+            'label': 'app.default.cancel'
+        }
+    ],
+    true,
+    true
+) }}

@@ -1,0 +1,25 @@
+App\Entity\ParameterConfiguration:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        green_belt:
+            expose: true
+        red_belt:
+            expose: true
+        max_speed:
+            expose: true
+        max_years_op:
+            expose: true
+        idleness:
+            expose: true
+        delay_tolerance_start:
+            expose: true
+        delay_tolerance_end:
+            expose: true
+        acc_max_sprint:
+            expose: true
+        acc_max_motion:
+            expose: true
+        company:
+            expose: true

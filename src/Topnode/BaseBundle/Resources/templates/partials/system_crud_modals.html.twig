@@ -1,0 +1,95 @@
+{% import "@TopnodeBase/macros/modal.html.twig" as modal %}
+
+<div aria-hidden="true" id="modal-form" class="modal fade animated" role="dialog">
+    <div class="modal-dialog modal-lg modal-centered" role="document">
+        <div class="modal-content-default"></div>
+
+        {{ modal.content(
+            'app.default.loading',
+            '<div class="row">
+                <div class="col-sm-12 text-center">
+                    <i class="' ~ icon_family ~ ' ' ~ icons.loader ~ ' fa-pulse fa-fw fa-5x"></i>
+                </div>
+            </div>',
+            'modal-content-loading',
+            [],
+            true,
+            false
+        ) }}
+
+        {{ modal.content(
+            'app.modal.title.success',
+            '<div class="row">
+                <div class="col-sm-12 text-center">
+                    <i class="' ~ icon_family ~ ' ' ~ icons.success ~ ' fa-fw fa-5x"></i>
+                </div>
+                <h3 class="message">' ~ ('app.modal.title.data_success'|trans) ~ '</h3>
+            </div>',
+            'modal-content-success',
+            [
+                {
+                    'class': 'btn-secondary',
+                    'dismiss': true,
+                    'label': 'app.default.close'
+                }
+            ],
+            true,
+            true
+        ) }}
+
+        {{ modal.content(
+            'app.modal.title.confirm',
+            '<div class="row">
+                <div class="col-sm-12 text-center">
+                    <i class="' ~ icon_family ~ ' ' ~ icons.warning ~ ' fa-fw fa-5x"></i>
+                </div>
+                <h3 class="message">' ~ ('app.modal.description.confirm_delete'|trans) ~ '</h3>
+            </div>',
+            'modal-content-confirm',
+            [
+                {
+                    'class': 'btn-secondary',
+                    'icon': 'backward',
+                    'dismiss': true,
+                    'label': 'app.default.cancel'
+                },
+                {
+                    'icon': 'forward',
+                    'class': 'btn-primary remove',
+                    'label': 'app.default.confirm'
+                }
+            ],
+            true,
+            true
+        ) }}
+
+        {{ modal.content(
+            'app.modal.title.error',
+            '<div class="row">
+                <div class="col-sm-12 text-center">
+                    <i class="' ~ icon_family ~ ' ' ~ icons.error ~ ' fa-fw fa-5x"></i>
+                </div>
+                <h3 class="message">' ~ ('app.modal.description.error'|trans) ~ '</h3>
+            </div>',
+            'modal-content-error',
+            [
+                {
+                    'class': 'btn-secondary',
+                    'dismiss': true,
+                    'label': 'app.default.close'
+                }
+            ],
+            true,
+            true
+        ) }}
+
+        {{ modal.content(
+            '',
+            '',
+            'modal-content-form',
+            [],
+            true,
+            true
+        ) }}
+    </div>
+</div>

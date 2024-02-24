@@ -1,0 +1,77 @@
+app:
+    security:
+        default:
+            logout: "Sair"
+            btn:
+                send: "Enviar"
+        authenticator:
+            form_error: 'Preencha o formulário corretamente.'
+            captcha_error: 'Preencha a validação de segurança corretamente.'
+            no_route_to_redirect: 'Usuário não possui rota adequada para redirecionamento após autenticação.'
+            credential_error: 'As credenciais informadas são inválidas.'
+        login:
+            title: "Acesse o sistema"
+            form:
+                fields:
+                    user: "E-mail"
+                    password: "Senha"
+                    remember_me: "Manter-se conectado"
+            btn:
+                send: "Acessar o Sistema"
+                recover: "Recuperar a senha"
+        recover:
+            title: "Recuperar acesso à conta"
+            form:
+                success: "Solicitação feita com sucesso, insira o código enviado para o e-mail de cadastro"
+                error: "Confira os dados do formulário"
+                fields:
+                    user: "E-mail"
+            email:
+                title: "Solicitação de recuperação de senha"
+                subject: "Recuperação de senha"
+                description: "Utilize o link abaixo para efetuar a recuperação de seu acesso"
+            btn:
+                send: "Solicitar recuperação"
+                back: "Voltar para tela de autenticação"
+                have_code: "Já possuo um código de recuperação"
+        recover_execute:
+            title: "Inserir código de recuperação"
+            form:
+                fields:
+                    code: "Código de verificação"
+                error: "Confira os dados do formulário"
+                link_error: "Link invalido ou expirado: verifique o valor informado."
+            btn:
+                resend_code: "Receber um novo código"
+                send: "Confirmar código"
+                back: "Voltar para tela de autenticação"
+        recover_change:
+            title: "Escolher uma nova senha"
+            form:
+                fields:
+                    password: "Nova senha"
+                    repeat_password: "Repita a nova senha"
+                success: "Senha alterada com sucesso"
+                error: "Confira os dados do formulário"
+            btn:
+                send: "Alterar senha"
+                back: "Voltar para tela de autenticação"
+        contact:
+            subject: "Formulário de contato"
+            code_confirm: "Código de confirmação"
+        switch:
+            title: "Personificar usuário"
+            profile_prefix: "Perfil"
+            btn:
+                send: "Trocar de Perfil"
+                back: "Parar de personificar"
+        email:
+            recover:
+                title: 'Recuperação de senha'
+                description: |
+                    Foi solicitada a alteração de senha para a sua conta.
+                    </br>
+                    Clique no link abaixo para cadastrar uma nova senha:
+                info: 'Para sua segurança, este link possui prazo de expiração de 48 horas.'
+                recover_code: 'Seu código de recuperação é'
+                cta: 'Recuperar acesso'

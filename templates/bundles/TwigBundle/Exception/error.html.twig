@@ -1,0 +1,19 @@
+{% extends "@TopnodeBase/system.html.twig" %}
+
+{% block title %}{{ 'app.error_page.error.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="jumbotron text-center">
+        <h1 class="display-1">{{ status_code }}</h1>
+
+        <h2>{{ 'app.error_page.generic_error.title'|trans }}</h2>
+
+        <span>({{ status_text }} - {{ "now"|date('Y-m-d H:i:s') }})</span>
+    </div>
+
+    {% if app.request.headers.get('referer') != app.request.get('_route') %}
+        <a class="btn btn-outline-primary btn-block mt-5" href="{{ app.request.headers.get('referer') }}">
+           <i class="fa fa-arrow-left"></i>&nbsp; {{ 'app.error_page.previous_page'|trans }}
+        </a>
+    {% endif %}
+{% endblock %}

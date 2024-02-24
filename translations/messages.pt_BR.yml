@@ -1,0 +1,3 @@
+app:
+    page_errors:
+        generic_error: 'Necessário o envio de informações'

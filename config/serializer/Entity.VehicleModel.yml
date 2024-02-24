@@ -1,0 +1,26 @@
+App\Entity\VehicleModel:
+    exclusion_policy: ALL
+    virtual_properties:
+        label:
+            exp: object.getLabel()
+            serialized_name: label
+            type: string
+    properties:
+        identifier:
+            expose: true
+        fuelDensity:
+            expose: true
+        description:
+            expose: true
+        airFuelRatio:
+            expose: true
+        efficiency:
+            expose: true
+        volume:
+            expose: true
+        brand:
+            expose: true
+        ect:
+            expose: true
+        iat:
+            expose: true

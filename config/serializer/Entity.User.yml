@@ -1,0 +1,17 @@
+App\Entity\User:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        name:
+            expose: true
+        company:
+            expose: true
+        cellphone:
+            expose: true
+        email:
+            expose: true
+        documentNumber:
+            expose: true
+        rolePlan:
+            expose: true

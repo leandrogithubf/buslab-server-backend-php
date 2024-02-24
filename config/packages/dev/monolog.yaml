@@ -1,0 +1,17 @@
+monolog:
+    handlers:
+        main:
+            type:         rotating_file
+            action_level: debug
+            handler:      nested
+            max_files:    1
+            path:         "%kernel.logs_dir%/%kernel.environment%.log"
+            channels: ["!event"]
+        console:
+            type: console
+            process_psr_3_messages: false
+            channels: ["!event"]
+        nested:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug

@@ -1,0 +1,17 @@
+App\Entity\Company:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        description:
+            expose: true
+        latitude:
+            expose: true
+        longitude:
+            expose: true
+        createdAt:
+            expose: true
+        color:
+            expose: true
+        rolePlan:
+            expose: true

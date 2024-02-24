@@ -1,0 +1,12 @@
+App\Entity\FuelQuote:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        value:
+            expose: true
+        date:
+            expose: true
+        company:
+            expose: true
+

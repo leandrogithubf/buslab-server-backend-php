@@ -1,0 +1,48 @@
+App\Entity\Vehicle:
+    exclusion_policy: ALL
+    virtual_properties:
+        label:
+            exp: object.getLabel()
+            serialized_name: label
+            type: string
+        serialPrefix:
+            exp: object.getSerialPrefix()
+            serialized_name: serialPrefix
+            type: string
+    properties:
+        identifier:
+            expose: true
+        prefix:
+            expose: true
+        plate:
+            expose: true
+        consumptionTarget:
+            expose: true
+        startOperation:
+            expose: true
+        company:
+            expose: true
+        obd:
+            expose: true
+        model:
+            expose: true
+        checkpoints:
+            expose: true
+        manufacture:
+            expose: true
+        chassi:
+            expose: true
+        doorsNumber:
+            expose: true
+        manufactoreBodywork:
+            expose: true
+        bodywork:
+            expose: true
+        seats:
+            expose: true
+        standing:
+            expose: true
+        periodicInspection:
+            expose: true
+        status:
+            expose: true

@@ -1,0 +1,97 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+    App\Topnode\BaseBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Repository,Tests,Twig}'
+    # General services
+    tn.mailer:
+        class: App\Topnode\BaseBundle\Utils\Mail\Mailer
+        public: true
+    tn.utils.multimedia.filehandler:
+        class: App\Topnode\BaseBundle\Utils\Multimedia\FileHandler
+        autoconfigure: true
+        public: true
+    tn.utils.paginator.view:
+        class: App\Topnode\BaseBundle\Utils\Paginator\ViewPaginator
+        autoconfigure: true
+        public: true
+    tn.utils.paginator.api:
+        class: App\Topnode\BaseBundle\Utils\Paginator\ApiPaginator
+        autoconfigure: true
+        public: true
+    tn.utils.api.response:
+        class: App\Topnode\BaseBundle\Utils\Api\Response\Response
+        public: true
+    tn.configurator.environment:
+        class: App\Topnode\BaseBundle\Utils\Configurator\Environment
+        public: true
+    tn.base.twig.extension:
+        class: App\Topnode\BaseBundle\Twig\BaseExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    # Generators
+    tn.utils.generator.breadcrumb:
+        class: App\Topnode\BaseBundle\Utils\Generator\BreadcrumbGenerator
+        autoconfigure: true
+        public: true
+    tn.utils.generator.sortable:
+        class: App\Topnode\BaseBundle\Utils\Generator\SortableGenerator
+        autoconfigure: true
+        public: true
+    tn.menu.builder:
+        class: App\Topnode\BaseBundle\Menu\MenuBuilder
+        arguments: ["@knp_menu.factory"]
+        tags:
+            - { name: knp_menu.menu_builder, method: main, alias: main }
+
+    # Doctrine listeners
+    tn.doctrine.listener.reactivate:
+        class: App\Topnode\BaseBundle\Doctrine\Listener\DoctrineReactivateEntityListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        public: false
+        tags:
+            - { name: kernel.event_listener, method: onKernelRequest }
+    tn.doctrine.listener.protocol:
+        class: App\Topnode\BaseBundle\Doctrine\Listener\ProtocolListener
+        public: false
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+    tn.doctrine.listener.identifier:
+        class: App\Topnode\BaseBundle\Doctrine\Listener\UniqueIdentifierListener
+        public: false
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+    tn.doctrine.listener.slug:
+        class: App\Topnode\BaseBundle\Doctrine\Listener\UniqueSlugListener
+        public: false
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+    tn.doctrine.listener.timestamp:
+        class: App\Topnode\BaseBundle\Doctrine\Listener\TimestampsListener
+        public: false
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+    tn.utils.entity.decisor.reactivate:
+        class: App\Topnode\BaseBundle\Utils\Entity\Decisor\ReactivateDecisor
+        public: true
+    tn.utils.listener.image_file:
+        class: App\Topnode\BaseBundle\Doctrine\Listener\ImageFileListener
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+    # Makers
+    tn.maker.crud:
+        class: App\Topnode\BaseBundle\Maker\MakeTopCrud
+        arguments: ["@maker.doctrine_helper", "@maker.renderer.form_type_renderer", "@maker.file_manager"]
+        tags:
+            - { name: maker.command }
+    tn.maker.entity:
+        class: App\Topnode\BaseBundle\Maker\MakeTopEntity
+        arguments: ["@maker.file_manager", "@maker.doctrine_helper", "@maker.generator"]
+        tags:
+            - { name: maker.command }

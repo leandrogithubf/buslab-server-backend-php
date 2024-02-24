@@ -1,0 +1,26 @@
+monolog:
+    handlers:
+        main:
+            type:         fingers_crossed
+            action_level: critical
+            handler:      grouped
+        grouped:
+            type:    group
+            members: [file, deduplicated]
+        file:
+            type:         rotating_file
+            action_level: error
+            handler:      nested
+            max_files:    3
+            path:         "%kernel.logs_dir%/%kernel.environment%.log"
+        deduplicated:
+            type:    deduplication
+            handler: swift
+        swift:
+            type:         swift_mailer
+            from_email:   'error@topnode.com.br'
+            to_email:     'mrb@buslab.com.br'
+            subject:      '[BL] Um erro ocorreu!'
+            level:        error
+            formatter:    monolog.formatter.html
+            content_type: text/html

@@ -1,0 +1,73 @@
+security:
+    hide_user_not_found: true
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+            cost: 19
+    role_hierarchy:
+        # ROLE_SUPER_ADMIN: [ROLE_ALLOWED_TO_SWITCH]
+        # ROLE_USER: []
+    providers:
+        user_provider:
+            id: App\Security\UserProvider
+        default:
+            entity:
+                class: App\Entity\User
+                property: username
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        front:
+            pattern: ^/(browserconfig.xml|manifest.json)$
+            security: false
+        api_login:
+            pattern:  ^/api/login
+            provider: user_provider
+            methods: [POST]
+            stateless: true
+            anonymous: true
+            simple_preauth:
+                authenticator: App\Security\ApiUserPreAuthenticator
+            json_login:
+                check_path: /api/login/check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        api:
+            pattern: ^/api/
+            stateless: true
+            anonymous: true
+            guard:
+                provider: user_provider
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+        main:
+            pattern: ^/
+            anonymous: lazy
+            provider: user_provider
+            switch_user: { role: ROLE_ROOT, parameter: _become_him }
+            guard:
+                authenticators:
+                    - App\Topnode\AuthBundle\Security\LoginFormAuthenticator
+            logout:
+                path: security_logout
+                target: security_login
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+                remember_me_parameter: "login[remember_me]"
+    access_control:
+        # Authentication paths, should always be non-secured
+        - { path: ^/api/(login|recover), roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^(/login|/signin|/recover|/recover/execute)$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/recover/change/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        # Prevents any user to access the impersonate screen
+        - { path: ^/switch$, roles: [ROLE_ROOT, ROLE_PREVIOUS_ADMIN] }
+
+        # Places the entire system APIs on secured access - This may be changed
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+
+        # Places the entire system on secured access - This may be changed
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

@@ -1,0 +1,42 @@
+{% extends '@TopnodeBase/email.html.twig' %}
+
+{% block content %}
+    <tbody>
+        <tr>
+            <td style="text-align:center;padding: 30px 30px 15px 30px;">
+                <h2 style="font-size: 18px; color: #16a1fd; font-weight: 600; margin: 0;">
+                    {{ 'app.security.email.recover.title'|trans }}
+                </h2>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;padding: 0 30px 20px">
+                <p style="margin-bottom: 10px;">
+                    {{ 'app.default.hello'|trans }} <b>{{ user.name }}</b>,
+                </p>
+                <p style="margin-bottom: 25px;">
+                        {{ 'app.security.email.recover.description'|trans|raw }}
+                </p>
+                <a href="{{ url('security_recover_execute', {'identifier': recovery.identifier}) }}" style="background-color:#16a1fd;border-radius:4px;color:#ffffff;display:inline-block;font-size:13px;font-weight:600;line-height:44px;text-align:center;text-decoration:none;text-transform: uppercase; padding: 0 25px">
+                    {{ 'app.security.email.recover.cta'|trans }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;color: #AAAAAA">
+                <p style="">
+                    {{ 'app.security.email.recover.recover_code'|trans }}: {{ recovery.identifier }}
+                </p>
+                <br>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;padding: 0 30px">
+                <p style="margin-bottom: 30px;">
+                    {{ 'app.security.email.recover.info'|trans }}
+                </p>
+                <br>
+            </td>
+        </tr>
+    </tbody>
+{% endblock %}

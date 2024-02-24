@@ -1,0 +1,43 @@
+{% block messages %}
+    {{ block('message_link') }}
+    {{ block('message_success') }}
+    {{ block('message_error') }}
+    {{ block('message_info') }}
+{% endblock %}
+
+{% block message_link %}
+    {% import '@TopnodeBase/macros/message.html.twig' as helper %}
+
+    {% for message in app.flashes('message_link') %}
+        {{ helper.message(
+            message.type,
+            message.before ~ ' <a href="' ~ message.url ~ '">' ~ message.text ~ '</a> ' ~ message.after,
+            true,
+            (message.icon is defined ? message.icon : 'info')
+        ) }}
+    {% endfor %}
+{% endblock %}
+
+{% block message_success %}
+    {% import '@TopnodeBase/macros/message.html.twig' as helper %}
+
+    {% for message in app.flashes('success') %}
+        {{ helper.message('success', message, true, 'success') }}
+    {% endfor %}
+{% endblock %}
+
+{% block message_info %}
+    {% import '@TopnodeBase/macros/message.html.twig' as helper %}
+
+    {% for message in app.flashes('info') %}
+        {{ helper.message('info', message, true, 'info') }}
+    {% endfor %}
+{% endblock %}
+
+{% block message_error %}
+    {% import '@TopnodeBase/macros/message.html.twig' as helper %}
+
+    {% for message in app.flashes('error') %}
+        {{ helper.message('danger', message, true, 'error') }}
+    {% endfor %}
+{% endblock %}

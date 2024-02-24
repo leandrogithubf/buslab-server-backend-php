@@ -1,0 +1,50 @@
+app:
+    default:
+        breadcrumb: "Breadcrumb"
+        empty_result_set: 'Nenhum registro'
+        cancel: Cancelar
+        confirm: Confirmar
+        close: Fechar
+        loading: Carregando...
+        search: Buscar
+    pagination:
+        sliding:
+            showing: Apresentando
+            not_paginated: '{0} nenhum resultado|{1} apenas um resultado|]1,Inf[ todos os %count% resultados'
+            paginated: '{0} nenhum resultado|{1} apenas um resultado|]1,Inf[ %count% resultados de %first% até %last% de um total de %total%.'
+    error_page:
+        previous_page: 'Página anterior'
+        back_site: 'Voltar para o site'
+        generic_error:
+            title: 'Um erro ocorreu'
+        error404:
+            title: 'Página não encontrada'
+            description: 'Este link não existe ou foi desativado.'
+    breadcrumb:
+        list: Listar
+        new: Novo
+        import: Importar
+        edit: Editar
+        delete: Remover
+        info: Detalhes
+        config: Configurar
+        duplicate: Duplicar
+        export: "Exportar lista"
+    modal:
+        title:
+            success: Sucesso!
+            confirm: 'Tem certeza?'
+            error: Erro...
+            data_success: 'Dados armazenados com sucesso'
+        description:
+            confirm_delete: 'Deseja confirmar a exclusão?'
+            error: 'Não foi possível realizar a ação'
+    form:
+        back: Voltar
+        cancel: Cancelar
+        confirm: Confirmar
+        save: Salvar
+        next: Próximo
+        filter: Filtrar
+        clear_filter: 'Limpar filtros'
+        advanced_filter: 'Busca avançada'

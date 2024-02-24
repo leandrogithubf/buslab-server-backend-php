@@ -1,0 +1,11 @@
+App\Entity\Consumption:
+    exclusion_policy: ALL
+    properties:
+        identifier:
+            expose: true
+        date:
+            expose: true
+        company:
+            expose: true
+        consumption:  
+            expose: true

@@ -1,0 +1,13 @@
+{% spaceless %}
+    <tr>
+        <td colspan="{{ (page_sortable|length) + 1 }}">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab">
+                    <h6 class="panel-title text-center">
+                        {{- message|trans -}}
+                    </h6>
+                </div>
+            </div>
+        </td>
+    </tr>
+{% endspaceless %}

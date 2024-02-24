@@ -1,0 +1,112 @@
+{% macro header_row(list) %}
+    {% import '@TopnodeBase/macros/sortable.html.twig' as sortable_helper %}
+    <tr>
+        {% for key, item in page_sortable %}
+            {% if item.is_sortable %}
+                <th>{{ sortable_helper.sortable_item(list, item.display_name, item.database_name) }}</th>
+            {% else %}
+                <th>{{ item.display_name|trans }}</th>
+            {% endif %}
+        {% endfor %}
+        <th class=""></th>
+    </tr>
+{% endmacro %}
+
+{% macro row(entity, attrs = {}, redirect = false, excludes = [], maxLength = 35) %}
+    {% import '@TopnodeBase/macros/breadcrumb.html.twig' as breadcrumb_helper %}
+    {% import _self as table_helper %}
+
+    {% set attrs = attrs|merge({
+        'edit': {
+            'data-url': url((page_breadcrumbs|last)['form'], {id: entity.id})
+        }|merge('edit' in attrs|keys and not redirect ? attrs.edit : {}),
+        'duplicate': {
+            'data-url': url((page_breadcrumbs|last)['form'], {id: entity.id, action: 'duplicate'})
+        }|merge('duplicate' in attrs|keys ? attrs.duplicate : {})
+    }) %}
+
+    {% if (page_breadcrumbs|last)['crud']['show'] is defined %}
+        {% set attrs = attrs|merge({
+            'show': {
+                'data-url': url((page_breadcrumbs|last)['crud']['show'], {id: entity.id})
+            }|merge('show' in attrs|keys and not redirect ? attrs.show : {})
+        }) %}
+    {% endif %}
+
+    {% if (page_breadcrumbs|last)['crud']['delete'] is defined %}
+        {% set attrs = attrs|merge({
+            'delete': {
+                'data-url': url((page_breadcrumbs|last)['crud']['delete'], {id: entity.id}),
+                'class': 'prompt-removal',
+            }|merge('delete' in attrs|keys ? attrs.delete : {})
+        }) %}
+    {% endif %}
+
+    <tr id="list-item-{{ entity|property_exists('identifier') ? entity.identifier : entity.id }}">
+        {% for item in page_sortable %}
+            {% set field = attribute(entity, item.field) %}
+            <td>
+                {%- if field is not null -%}
+                    {% if field is instanceof('DateTime') %}
+                        {% if field|date('H:i:s') == '00:00:00' %}
+                            {{- field|date('d/m/Y') -}}
+                        {% else %}
+                            {{- field|date('d/m/Y H:i:s') -}}
+                        {% endif %}
+                    {% elseif item.label is defined %}
+                        {% if field is iterable %}
+                            {% for subField in field %}
+                                {{ table_helper.itemLabel(subField, item.label, item.alt_label is defined ? item.alt_label : false, maxLength) }}
+                            {% endfor %}
+                        {% else %}
+                            {{ table_helper.itemLabel(field, item.label, item.alt_label is defined ? item.alt_label : false, maxLength) }}
+                        {% endif %}
+                    {% else %}
+                        {{- field|truncate(maxLength, true) -}}
+                    {% endif %}
+                {%- else -%}
+                    -
+                {%- endif -%}
+            </td>
+        {% endfor %}
+        <td class="row-actions text-right">
+            {% if entity not in excludes %}
+                {{ breadcrumb_helper.crud_links(page_breadcrumbs|last, entity.id, ['new', 'upload', 'export'], attrs, false, false) }}
+            {% endif %}
+        </td>
+    </tr>
+{% endmacro %}
+
+{% macro itemLabel(field, label, alt_label, maxLength = 35) %}
+    {% import '@TopnodeBase/macros/icon.html.twig' as icon_helper %}
+
+    {{- attribute(field, label)|truncate(maxLength, true) -}}
+
+    {% if alt_label is not empty %}
+        <span class="badge badge-pill badge-primary" data-toggle="tooltip" alt="{{- attribute(field, alt_label) -}}" title="{{- attribute(field, alt_label) -}}">
+            {{ icon_helper.icon('info') }}
+        </span>
+    {% endif %}
+{% endmacro %}
+
+{% macro table(list, class = '', attrs = {}, redirect = false, excludes = []) %}
+    {% import _self as table_helper %}
+
+    <table class="{{ class is iterable ? class|join(' ') : class }}">
+        <thead>
+            {{ table_helper.header_row(list) }}
+        </thead>
+        <tbody>
+            {% for entity in list %}
+                {{ table_helper.row(entity, attrs, redirect, excludes) }}
+            {% else %}
+                {% import '@TopnodeBase/macros/message.html.twig' as message_helper %}
+                <tr>
+                    <td colspan="{{ page_sortable|length + 1 }}" class="text-center empty-set">
+                        {{ message_helper.message('info', 'app.default.empty_result_set', false, 'warning') }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}

@@ -1,0 +1,9 @@
+framework:
+    default_locale: "%env(LOCALE_LANG)%"
+    translator:
+        fallbacks:
+            - '%locale%'
+        default_path: '%kernel.project_dir%/translations'
+        paths:
+            - '%kernel.project_dir%/src/Topnode/AuthBundle/Resources/translations/'
+            - '%kernel.project_dir%/src/Topnode/BaseBundle/Resources/translations/'

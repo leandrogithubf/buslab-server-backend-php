@@ -1,0 +1,65 @@
+{% macro modal(title, content, class = '', buttons = [], isHidden = false, allowClose = true) %}
+    {% import _self as helper %}
+
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            {{ helper.content(title, content, class, buttons, isHidden, allowClose) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro content(title, content, class = '', buttons = [], isHidden = false, allowClose = true) %}
+    {% import _self as helper %}
+
+    {{ helper.open(title, class, isHidden, allowClose) }}
+
+    <div class="modal-body">
+        {{ content|raw }}
+    </div>
+
+    {{ helper.close(buttons, allowClose) }}
+{% endmacro %}
+
+{% macro buttons(buttons = [], allowClose = true) %}
+    {% import "@TopnodeBase/macros/icon.html.twig" as icons %}
+    {% for button in buttons %}
+        <button type="{{ 'type' in button|keys ? button.type : 'button' }}" class="btn {{ button.class }}" {{ 'dismiss' in button|keys and button.dismiss ? 'data-dismiss="modal"' : '' }} aria-label="{{ button.label|trans }}">
+            {%- if 'icon' in button|keys -%}
+                {{ icons.icon(button.icon) }}&nbsp;
+            {%- endif -%}
+
+            {%- if 'content' in button|keys -%}
+                {{- button.content|raw -}}
+            {%- else -%}
+                {{- button.label|trans -}}
+            {%- endif -%}
+        </button>
+    {% else %}
+        {% if allowClose %}
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                {{- 'app.default.close'|trans -}}
+            </button>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% macro open(title, class = '', isHidden = false, allowClose = true) %}
+    <div class="modal-content {{ class }}" style="{{ isHidden ? 'display: none;' : '' }}">
+        <div class="modal-header">
+            <h4 class="modal-title">{{ title|length > 0 ? title|trans : '' }}</h4>
+            {% if allowClose %}
+                <button type="button" class="close" data-dismiss="modal" aria-label="{{ 'app.default.close'|trans }}">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            {% endif %}
+        </div>
+{% endmacro %}
+
+{% macro close(buttons = [], allowClose = true) %}
+    {% import _self as helper %}
+
+        <div class="modal-footer">
+            {{ helper.buttons(buttons, allowClose) }}
+        </div>
+    </div>
+{% endmacro %}
